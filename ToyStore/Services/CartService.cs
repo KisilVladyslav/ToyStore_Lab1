@@ -1,76 +1,80 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
+using ToyStore.Services.Interfaces;
 
-public class CartService : ICartService
+namespace ToyStore.Services
 {
-    private readonly ToyStoreDbContext _context;
-
-    public CartService(ToyStoreDbContext context)
+    public class CartService : ICartService
     {
-        _context = context;
-    }
+        private readonly ToyStoreDbContext _context;
 
-    public async Task<Cart> GetCartByCustomerIdAsync(int customerId)
-    {
-        return await _context.Carts
-                             .Include(c => c.CartItems)
-                             .ThenInclude(ci => ci.Toy)
-                             .FirstOrDefaultAsync(c => c.CustomerId == customerId);
-    }
-
-    public async Task AddItemToCartAsync(int customerId, int toyId, int quantity)
-    {
-        var cart = await GetCartByCustomerIdAsync(customerId);
-        if (cart == null)
+        public CartService(ToyStoreDbContext context)
         {
-            cart = new Cart { CustomerId = customerId, CartItems = new List<CartItem>() };
-            _context.Carts.Add(cart);
+            _context = context;
+        }
+
+        public async Task<Cart> GetCartByCustomerIdAsync(int customerId)
+        {
+            return await _context.Carts
+                                 .Include(c => c.CartItems)
+                                 .ThenInclude(ci => ci.Toy)
+                                 .FirstOrDefaultAsync(c => c.CustomerId == customerId);
+        }
+
+        public async Task AddItemToCartAsync(int customerId, int toyId, int quantity)
+        {
+            var cart = await GetCartByCustomerIdAsync(customerId);
+            if (cart == null)
+            {
+                cart = new Cart { CustomerId = customerId, CartItems = new List<CartItem>() };
+                _context.Carts.Add(cart);
+                await _context.SaveChangesAsync();
+            }
+
+            var cartItem = new CartItem { CartId = cart.Id, ToyId = toyId, Quantity = quantity };
+            _context.CartItems.Add(cartItem);
             await _context.SaveChangesAsync();
         }
 
-        var cartItem = new CartItem { CartId = cart.Id, ToyId = toyId, Quantity = quantity };
-        _context.CartItems.Add(cartItem);
-        await _context.SaveChangesAsync();
-    }
-
-    public async Task RemoveItemFromCartAsync(int customerId, int toyId)
-    {
-        var cart = await GetCartByCustomerIdAsync(customerId);
-        if (cart != null)
+        public async Task RemoveItemFromCartAsync(int customerId, int toyId)
         {
-            var cartItem = await _context.CartItems
-                                          .FirstOrDefaultAsync(ci => ci.CartId == cart.Id && ci.ToyId == toyId);
-            if (cartItem != null)
+            var cart = await GetCartByCustomerIdAsync(customerId);
+            if (cart != null)
             {
-                _context.CartItems.Remove(cartItem);
-                await _context.SaveChangesAsync();
+                var cartItem = await _context.CartItems
+                                              .FirstOrDefaultAsync(ci => ci.CartId == cart.Id && ci.ToyId == toyId);
+                if (cartItem != null)
+                {
+                    _context.CartItems.Remove(cartItem);
+                    await _context.SaveChangesAsync();
+                }
             }
         }
-    }
 
-    public async Task UpdateCartItemAsync(int customerId, int toyId, int quantity)
-    {
-        var cart = await GetCartByCustomerIdAsync(customerId);
-        if (cart != null)
+        public async Task UpdateCartItemAsync(int customerId, int toyId, int quantity)
         {
-            var cartItem = await _context.CartItems
-                                          .FirstOrDefaultAsync(ci => ci.CartId == cart.Id && ci.ToyId == toyId);
-            if (cartItem != null)
+            var cart = await GetCartByCustomerIdAsync(customerId);
+            if (cart != null)
             {
-                cartItem.Quantity = quantity;
-                _context.CartItems.Update(cartItem);
-                await _context.SaveChangesAsync();
+                var cartItem = await _context.CartItems
+                                              .FirstOrDefaultAsync(ci => ci.CartId == cart.Id && ci.ToyId == toyId);
+                if (cartItem != null)
+                {
+                    cartItem.Quantity = quantity;
+                    _context.CartItems.Update(cartItem);
+                    await _context.SaveChangesAsync();
+                }
             }
         }
-    }
 
-    public async Task ClearCartAsync(int customerId)
-    {
-        var cart = await GetCartByCustomerIdAsync(customerId);
-        if (cart != null)
+        public async Task ClearCartAsync(int customerId)
         {
-            _context.CartItems.RemoveRange(cart.CartItems);
-            await _context.SaveChangesAsync();
+            var cart = await GetCartByCustomerIdAsync(customerId);
+            if (cart != null)
+            {
+                _context.CartItems.RemoveRange(cart.CartItems);
+                await _context.SaveChangesAsync();
+            }
         }
     }
 }
