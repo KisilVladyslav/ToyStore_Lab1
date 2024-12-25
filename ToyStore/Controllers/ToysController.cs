@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -55,6 +56,7 @@ namespace ToyStore.Controllers
         }
 
         // GET: Toys/Create
+        [Authorize]
         public IActionResult Create()
         {
             ViewData["CategoryId"] = new SelectList(_context.ToyCategories, "Id", "Name");
@@ -88,6 +90,7 @@ namespace ToyStore.Controllers
         }
 
         // GET: Toys/Edit/5
+        [Authorize]
         public async Task<IActionResult> Edit(Guid? id)
         {
             if (id == null)
@@ -149,6 +152,7 @@ namespace ToyStore.Controllers
         }
 
         // GET: Toys/Delete/5
+        [Authorize]
         public async Task<IActionResult> Delete(Guid? id)
         {
             if (id == null)
