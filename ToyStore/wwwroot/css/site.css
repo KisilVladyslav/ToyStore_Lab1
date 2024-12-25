@@ -1,0 +1,64 @@
+﻿:root {
+    --primary-color: #007bff; /* A typical blue */
+    --secondary-color: #6c757d; /* A gray */
+    --accent-color: #28a745; /* A shade of green */
+    --text-color: #343a40; /* A dark gray */
+    --background-color: #f8f9fa; /* A light gray */
+}
+
+
+body {
+    background-color: var(--background-color);
+    color: var(--text-color);
+}
+
+a {
+    color: var(--primary-color);
+    text-decoration: none; /* Remove underlines from links */
+}
+
+    a:hover {
+        color: var(--accent-color);
+        text-decoration: underline; /* Underline on hover */
+    }
+
+.btn-primary {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+    .btn-primary:hover {
+        background-color: #0056b3;
+        border-color: #0056b3;
+    }
+
+header {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 1rem 0;
+}
+
+    header a.navbar-brand {
+        color: white; /* make sure that the navbar brand is also white */
+    }
+
+        header a.navbar-brand:hover {
+            color: #f8f9fa
+        }
+
+footer {
+    background-color: var(--secondary-color);
+    color: white;
+    padding: 1rem 0;
+}
+
+.container {
+    max-width: 900px; /* Change the maximum width of content */
+    margin: auto; /* Center the container */
+}
+
+p {
+    margin-bottom: 1rem; /* Adds a bit of space between paragraphs */
+    line-height: 1.6; /* Adds line spacing within the paragraph itself */
+}
+

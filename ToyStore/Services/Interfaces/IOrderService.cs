@@ -5,10 +5,10 @@ namespace ToyStore.Services.Interfaces
 {
     public interface IOrderService
     {
-        Task<List<Order>> GetOrdersByCustomerAsync(int customerId);
-        Task<Order> GetOrderByIdAsync(int orderId);
+        Task<List<Order>> GetOrdersByCustomerAsync(Guid customerId);
+        Task<Order> GetOrderByIdAsync(Guid orderId);
         Task CreateOrderAsync(Order order);
         Task UpdateOrderAsync(Order order);
-        Task DeleteOrderAsync(int orderId);
+        Task DeleteOrderAsync(Guid orderId);
     }
 }

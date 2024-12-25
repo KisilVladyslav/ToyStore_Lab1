@@ -19,10 +19,10 @@ namespace ToyStore.Services
             return await _context.Customers.ToListAsync();
         }
 
-        public async Task<Customer> GetCustomerByIdAsync(int id)
-        {
-            return await _context.Customers.FirstOrDefaultAsync(c => c.Id == id);
-        }
+        //public async Task<Customer> GetCustomerByIdAsync(Guid id)
+        //{
+        //    return await _context.Customers.FirstOrDefaultAsync(c => c.Id == id);
+        //}
 
         public async Task CreateCustomerAsync(Customer customer)
         {
@@ -36,14 +36,14 @@ namespace ToyStore.Services
             await _context.SaveChangesAsync();
         }
 
-        public async Task DeleteCustomerAsync(int id)
-        {
-            var customer = await GetCustomerByIdAsync(id);
-            if (customer != null)
-            {
-                _context.Customers.Remove(customer);
-                await _context.SaveChangesAsync();
-            }
-        }
+        //public async Task DeleteCustomerAsync(Guid id)
+        //{
+        //    var customer = await GetCustomerByIdAsync(id);
+        //    if (customer != null)
+        //    {
+        //        _context.Customers.Remove(customer);
+        //        await _context.SaveChangesAsync();
+        //    }
+        //}
     }
 }

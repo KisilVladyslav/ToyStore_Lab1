@@ -13,7 +13,7 @@ namespace ToyStore.Services
             _context = context;
         }
 
-        public async Task<Cart> GetCartByCustomerIdAsync(int customerId)
+        public async Task<Cart> GetCartByCustomerIdAsync(Guid customerId)
         {
             return await _context.Carts
                                  .Include(c => c.CartItems)
@@ -21,7 +21,7 @@ namespace ToyStore.Services
                                  .FirstOrDefaultAsync(c => c.CustomerId == customerId);
         }
 
-        public async Task AddItemToCartAsync(int customerId, int toyId, int quantity)
+        public async Task AddItemToCartAsync(Guid customerId, Guid toyId, int quantity)
         {
             var cart = await GetCartByCustomerIdAsync(customerId);
             if (cart == null)
@@ -36,7 +36,7 @@ namespace ToyStore.Services
             await _context.SaveChangesAsync();
         }
 
-        public async Task RemoveItemFromCartAsync(int customerId, int toyId)
+        public async Task RemoveItemFromCartAsync(Guid customerId, Guid toyId)
         {
             var cart = await GetCartByCustomerIdAsync(customerId);
             if (cart != null)
@@ -51,7 +51,7 @@ namespace ToyStore.Services
             }
         }
 
-        public async Task UpdateCartItemAsync(int customerId, int toyId, int quantity)
+        public async Task UpdateCartItemAsync(Guid customerId, Guid toyId, int quantity)
         {
             var cart = await GetCartByCustomerIdAsync(customerId);
             if (cart != null)
@@ -67,7 +67,7 @@ namespace ToyStore.Services
             }
         }
 
-        public async Task ClearCartAsync(int customerId)
+        public async Task ClearCartAsync(Guid customerId)
         {
             var cart = await GetCartByCustomerIdAsync(customerId);
             if (cart != null)

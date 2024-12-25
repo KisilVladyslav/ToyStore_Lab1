@@ -14,7 +14,7 @@ namespace ToyStore.Services
             _context = context;
         }
 
-        public async Task<List<Order>> GetOrdersByCustomerAsync(int customerId)
+        public async Task<List<Order>> GetOrdersByCustomerAsync(Guid customerId)
         {
             return await _context.Orders
                                  .Include(o => o.OrderItems)
@@ -23,7 +23,7 @@ namespace ToyStore.Services
                                  .ToListAsync();
         }
 
-        public async Task<Order> GetOrderByIdAsync(int orderId)
+        public async Task<Order> GetOrderByIdAsync(Guid orderId)
         {
             return await _context.Orders
                                  .Include(o => o.OrderItems)
@@ -43,7 +43,7 @@ namespace ToyStore.Services
             await _context.SaveChangesAsync();
         }
 
-        public async Task DeleteOrderAsync(int orderId)
+        public async Task DeleteOrderAsync(Guid orderId)
         {
             var order = await GetOrderByIdAsync(orderId);
             if (order != null)

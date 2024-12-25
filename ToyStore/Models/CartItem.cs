@@ -4,15 +4,15 @@ using System.ComponentModel.DataAnnotations.Schema;
 public class CartItem
 {
     [Key]
-    public int Id { get; set; }
+    public Guid Id { get; set; }
 
     [Required]
     [ForeignKey("Cart")]
-    public int CartId { get; set; }  // Ідентифікатор кошика, до якого належить товар
+    public Guid CartId { get; set; }  // Ідентифікатор кошика, до якого належить товар
 
     [Required]
     [ForeignKey("Toy")]
-    public int ToyId { get; set; }  // Ідентифікатор товару
+    public Guid ToyId { get; set; }  // Ідентифікатор товару
 
     [Required]
     [Range(1, int.MaxValue)]

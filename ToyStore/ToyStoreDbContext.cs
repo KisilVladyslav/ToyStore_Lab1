@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.General;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
-public class ToyStoreDbContext : DbContext
+public class ToyStoreDbContext : IdentityDbContext<Customer>
 {
     // Конструктор для ініціалізації контексту з параметрами
     public ToyStoreDbContext(DbContextOptions<ToyStoreDbContext> options)

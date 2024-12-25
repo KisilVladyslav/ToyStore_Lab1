@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 public class Toy
 {
     [Key]
-    public int Id { get; set; }
+    public Guid Id { get; set; }
 
     [Required]
     [MaxLength(100)]
@@ -18,7 +18,7 @@ public class Toy
     public bool IsAvailable { get; set; }  // Якщо товар доступний, то true, інакше false.
 
     [ForeignKey("Category")]
-    public int CategoryId { get; set; }
+    public Guid CategoryId { get; set; }
 
     public virtual ToyCategory Category { get; set; }
 }

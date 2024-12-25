@@ -19,7 +19,7 @@ namespace ToyStore.Services
             return await _context.Toys.Include(t => t.Category).ToListAsync();
         }
 
-        public async Task<Toy> GetToyByIdAsync(int id)
+        public async Task<Toy> GetToyByIdAsync(Guid id)
         {
             return await _context.Toys.Include(t => t.Category)
                                       .FirstOrDefaultAsync(t => t.Id == id);
@@ -37,7 +37,7 @@ namespace ToyStore.Services
             await _context.SaveChangesAsync();
         }
 
-        public async Task DeleteToyAsync(int id)
+        public async Task DeleteToyAsync(Guid id)
         {
             var toy = await GetToyByIdAsync(id);
             if (toy != null)

@@ -5,10 +5,10 @@ using System.ComponentModel.DataAnnotations;
 public class Order
 {
     [Key]
-    public int Id { get; set; }
+    public Guid Id { get; set; }
 
     [Required]
-    public int CustomerId { get; set; }
+    public Guid CustomerId { get; set; }
 
     [Required]
     public DateTime OrderDate { get; set; }
