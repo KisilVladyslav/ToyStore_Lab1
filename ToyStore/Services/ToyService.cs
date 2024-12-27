@@ -25,10 +25,11 @@ namespace ToyStore.Services
                                       .FirstOrDefaultAsync(t => t.Id == id);
         }
 
-        public async Task CreateToyAsync(Toy toy)
+        public async Task<Toy> CreateToyAsync(Toy toy)
         {
             _context.Toys.Add(toy);
             await _context.SaveChangesAsync();
+            return toy;
         }
 
         public async Task UpdateToyAsync(Toy toy)

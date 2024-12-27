@@ -7,7 +7,7 @@ namespace ToyStore.Services.Interfaces
     {
         Task<List<Toy>> GetAllToysAsync();
         Task<Toy> GetToyByIdAsync(Guid id);
-        Task CreateToyAsync(Toy toy);
+        Task<Toy> CreateToyAsync(Toy toy);
         Task UpdateToyAsync(Toy toy);
         Task DeleteToyAsync(Guid id);
     }
